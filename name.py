@@ -70,9 +70,13 @@ def main(input_file, output_file=None):
     Extracts name from the input JSON document and writes to output file if specified, print it otherwise.
     """
     document = load_json(input_file)
-    text_document = " ".join(
-        page_to_string(document, i) for i in range(len(document["pages"]))
-    )
+    try:
+        text_document = " ".join(
+            page_to_string(document, i) for i in range(len(document["pages"]))
+        )
+    except KeyError:
+        print("Error: Invalid document format. Pages are missing.")
+        sys.exit(1)
     extracted_name = extract_patient_name(text_document)
 
     if output_file:
