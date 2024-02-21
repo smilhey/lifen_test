@@ -26,6 +26,9 @@ def extract_patient_name(text):
     keywords = ["Monsieur", "Madame", "M.", "Mme"]
     split_text = text.split()
     for i in range(len(split_text)):
+        # If the keyword is the last word of the document, there is no name to extract
+        if i == len(split_text) - 1:
+            return {}
         if split_text[i] in keywords:
             first_name = split_text[i + 1]
             last_name = split_text[i + 2] if i + 2 < len(split_text) else ""
